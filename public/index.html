@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Story Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎭 AI Story Generator</h1>
+            <p class="subtitle">Create stories with AI and bring them to life with voice</p>
+        </header>
+
+        <main>
+            <div class="input-section">
+                <label for="storyIdea">Enter your story idea:</label>
+                <textarea 
+                    id="storyIdea" 
+                    placeholder="E.g., A brave knight discovers a magical forest where time stands still..."
+                    rows="4"
+                ></textarea>
+                <button id="generateBtn" class="btn btn-primary">
+                    <span class="btn-text">Generate Story</span>
+                    <span class="spinner hidden"></span>
+                </button>
+            </div>
+
+            <div id="storySection" class="story-section hidden">
+                <h2>Your Story</h2>
+                <div id="storyText" class="story-text"></div>
+                
+                <div class="audio-controls">
+                    <button id="voiceBtn" class="btn btn-secondary">
+                        <span class="btn-text">🎙️ Generate Voice</span>
+                        <span class="spinner hidden"></span>
+                    </button>
+                    
+                    <div id="audioPlayerSection" class="audio-player-section hidden">
+                        <div class="audio-controls-row">
+                            <button id="playBtn" class="btn btn-success">▶️ Play</button>
+                            <button id="stopBtn" class="btn btn-danger">⏹️ Stop</button>
+                        </div>
+                        <div class="audio-progress-container">
+                            <div id="audioProgressBar" class="audio-progress-bar">
+                                <div id="audioProgressFill" class="audio-progress-fill"></div>
+                            </div>
+                            <div class="audio-info">
+                                <span id="audioStatus">Ready to play</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="errorMessage" class="error-message hidden"></div>
+        </main>
+
+        <footer>
+            <p>Powered by OpenAI & ElevenLabs</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
