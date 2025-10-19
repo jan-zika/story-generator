@@ -14,17 +14,26 @@
     "netlify:deploy:prod": "netlify deploy --prod",
     "build": "echo 'No build step required for static site'"
   },
-  "keywords": ["openai", "elevenlabs", "story", "voice", "ai", "netlify", "serverless"],
+  "keywords": [
+    "openai",
+    "elevenlabs",
+    "story",
+    "voice",
+    "ai",
+    "netlify",
+    "serverless"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "openai": "^4.67.0",
-    "@elevenlabs/elevenlabs-js": "^0.8.2"
+    "@elevenlabs/client": "^0.8.0",
+    "@elevenlabs/elevenlabs-js": "latest",
+    "openai": "^4.67.0"
   },
   "devDependencies": {
-    "express": "^4.18.2",
-    "dotenv": "^16.3.1",
     "cors": "^2.8.5",
-    "netlify-cli": "^17.0.0"
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "netlify-cli": "^23.9.1"
   }
 }
