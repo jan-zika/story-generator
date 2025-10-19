@@ -8,14 +8,16 @@
   },
   "scripts": {
     "start": "node dev-server.js",
-    "dev": "node dev-server.js"
+    "dev": "node dev-server.js",
+    "build": "echo 'No build step required for static site'",
+    "vercel-build": "echo 'Static site - no build needed'"
   },
   "keywords": ["openai", "elevenlabs", "story", "voice", "ai", "vercel", "serverless"],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "openai": "^4.20.1",
-    "@elevenlabs/elevenlabs-js": "latest"
+    "openai": "^4.67.0",
+    "@elevenlabs/elevenlabs-js": "^0.8.2"
   },
   "devDependencies": {
     "express": "^4.18.2",
