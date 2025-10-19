@@ -1,6 +1,10 @@
 {
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "ignoreCommand": "echo 'skip server.js'",
+  "buildCommand": "",
+  "outputDirectory": "public"
 }
