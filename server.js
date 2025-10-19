@@ -1,7 +1,20 @@
 /**
  * Local Development Server
- * This file is used ONLY for local development with `npm run dev`
- * Vercel will use the serverless functions in /api folder
+ * 
+ * ⚠️  IMPORTANT: This file is ONLY for local development
+ * 
+ * Purpose: Provides Express server for local testing
+ * Usage: npm run dev
+ * 
+ * Vercel Deployment:
+ * - Vercel IGNORES this file (see .vercelignore)
+ * - Vercel uses /api serverless functions directly
+ * - This ensures environment variables work correctly in production
+ * 
+ * How it works:
+ * - Imports the same handler functions from /api
+ * - Attaches them to Express routes
+ * - Allows testing at http://localhost:3001/api/...
  */
 
 import 'dotenv/config';
@@ -31,8 +44,13 @@ app.get('/api/health', (req, res) => healthHandler(req, res));
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`\n🚀 Story Generator Server running on http://localhost:${PORT}`);
+  console.log(`\n🚀 Story Generator - Local Development Server`);
+  console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+  console.log(`📍 Server: http://localhost:${PORT}`);
   console.log(`📝 OpenAI API Key: ${process.env.OPENAI_API_KEY ? '✓ Loaded' : '✗ Missing'}`);
   console.log(`🎙️  ElevenLabs API Key: ${process.env.ELEVENLABS_API_KEY ? '✓ Loaded' : '✗ Missing'}`);
-  console.log(`\n💡 Local development mode - using serverless handlers from /api\n`);
+  console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+  console.log(`💡 Mode: LOCAL DEVELOPMENT`);
+  console.log(`📦 Using serverless handlers from /api`);
+  console.log(`⚠️  Note: Vercel ignores this file in production\n`);
 });

@@ -1,3 +1,13 @@
+/**
+ * Serverless Function: Generate Audio
+ * 
+ * Purpose: Convert text to speech using ElevenLabs
+ * Runtime: Vercel Serverless (production) | Express (local dev)
+ * 
+ * Environment Variables Required:
+ * - ELEVENLABS_API_KEY: ElevenLabs API key
+ */
+
 import { ElevenLabsClient } from '@elevenlabs/elevenlabs-js';
 
 const ELEVENLABS_VOICE_ID = 'EXAVITQu4vr4xnSDxMaL'; // Default voice (Sarah)
@@ -8,6 +18,20 @@ const ELEVENLABS_VOICE_ID = 'EXAVITQu4vr4xnSDxMaL'; // Default voice (Sarah)
  * @param {Response} res - HTTP response
  */
 export default async function handler(req, res) {
+  // Log runtime environment
+  const isVercel = process.env.VERCEL === '1';
+  console.log(`[generate-audio] Running in: ${isVercel ? 'Vercel' : 'Local'}`);
+  
+  // Validate environment variables
+  if (!process.env.ELEVENLABS_API_KEY) {
+    console.error('[generate-audio] ERROR: ELEVENLABS_API_KEY is missing');
+    return res.status(500).json({ 
+      error: 'Server configuration error: ElevenLabs API key not configured',
+      details: 'Please set ELEVENLABS_API_KEY in Vercel environment variables',
+      errorType: 'configuration'
+    });
+  }
+  
   // Initialize ElevenLabs client inside handler
   const elevenlabs = new ElevenLabsClient({
     apiKey: process.env.ELEVENLABS_API_KEY

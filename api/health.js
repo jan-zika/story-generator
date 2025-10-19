@@ -1,9 +1,20 @@
 /**
+ * Serverless Function: Health Check
+ * 
+ * Purpose: Verify API is running and environment is configured
+ * Runtime: Vercel Serverless (production) | Express (local dev)
+ */
+
+/**
  * Serverless function for health check
  * @param {Request} req - HTTP request
  * @param {Response} res - HTTP response
  */
 export default async function handler(req, res) {
+  // Log runtime environment
+  const isVercel = process.env.VERCEL === '1';
+  console.log(`[health] Running in: ${isVercel ? 'Vercel' : 'Local'}`);
+  
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -18,7 +29,11 @@ export default async function handler(req, res) {
 
   res.status(200).json({ 
     status: 'ok',
-    environment: process.env.VERCEL ? 'vercel' : 'local',
-    timestamp: new Date().toISOString()
+    environment: isVercel ? 'vercel' : 'local',
+    timestamp: new Date().toISOString(),
+    envVarsConfigured: {
+      openai: !!process.env.OPENAI_API_KEY,
+      elevenlabs: !!process.env.ELEVENLABS_API_KEY
+    }
   });
 }

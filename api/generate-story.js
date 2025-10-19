@@ -1,3 +1,13 @@
+/**
+ * Serverless Function: Generate Story
+ * 
+ * Purpose: Generate creative stories using OpenAI GPT-3.5
+ * Runtime: Vercel Serverless (production) | Express (local dev)
+ * 
+ * Environment Variables Required:
+ * - OPENAI_API_KEY: OpenAI API key
+ */
+
 import OpenAI from 'openai';
 
 /**
@@ -6,6 +16,19 @@ import OpenAI from 'openai';
  * @param {Response} res - HTTP response
  */
 export default async function handler(req, res) {
+  // Log runtime environment
+  const isVercel = process.env.VERCEL === '1';
+  console.log(`[generate-story] Running in: ${isVercel ? 'Vercel' : 'Local'}`);
+  
+  // Validate environment variables
+  if (!process.env.OPENAI_API_KEY) {
+    console.error('[generate-story] ERROR: OPENAI_API_KEY is missing');
+    return res.status(500).json({ 
+      error: 'Server configuration error: OpenAI API key not configured',
+      details: 'Please set OPENAI_API_KEY in Vercel environment variables'
+    });
+  }
+  
   // Initialize OpenAI client inside handler
   const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
