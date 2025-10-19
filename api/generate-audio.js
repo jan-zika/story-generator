@@ -1,10 +1,5 @@
 import { ElevenLabsClient } from '@elevenlabs/elevenlabs-js';
 
-// Initialize ElevenLabs client
-const elevenlabs = new ElevenLabsClient({
-  apiKey: process.env.ELEVENLABS_API_KEY
-});
-
 const ELEVENLABS_VOICE_ID = 'EXAVITQu4vr4xnSDxMaL'; // Default voice (Sarah)
 
 /**
@@ -13,6 +8,10 @@ const ELEVENLABS_VOICE_ID = 'EXAVITQu4vr4xnSDxMaL'; // Default voice (Sarah)
  * @param {Response} res - HTTP response
  */
 export default async function handler(req, res) {
+  // Initialize ElevenLabs client inside handler
+  const elevenlabs = new ElevenLabsClient({
+    apiKey: process.env.ELEVENLABS_API_KEY
+  });
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');

@@ -1,16 +1,15 @@
 import OpenAI from 'openai';
 
-// Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
-
 /**
  * Serverless function to generate a story using OpenAI
  * @param {Request} req - HTTP request
  * @param {Response} res - HTTP response
  */
 export default async function handler(req, res) {
+  // Initialize OpenAI client inside handler
+  const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY
+  });
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
