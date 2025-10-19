@@ -1,4 +1,5 @@
-# Ignore server.js - only for local development
+# Ignore dev server - only for local development
+dev-server.js
 server.js
 
 # Ignore environment files
