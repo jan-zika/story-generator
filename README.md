@@ -22,7 +22,9 @@ A voice-powered story generator that uses OpenAI to create engaging short storie
 - OpenAI API Key
 - ElevenLabs API Key
 
-## Installation
+## Installation & Deployment
+
+### Local Development
 
 1. Clone the repository:
 ```bash
@@ -35,23 +37,45 @@ cd story-generator
 npm install
 ```
 
-3. Create a `.env` file in the root directory with your API keys:
-```
+3. Create a `.env` file in the root directory:
+```env
 OPENAI_API_KEY=your_openai_api_key_here
 ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
 ```
 
-## Local Development
-
-1. Start the server:
+4. Start the development server:
 ```bash
-npm start
+npm run dev
 ```
 
-2. Open your browser and navigate to:
+5. Open your browser and navigate to:
 ```
 http://localhost:3001
 ```
+
+### Vercel Deployment
+
+This project is configured for **serverless deployment** on Vercel:
+
+1. **Push to GitHub:**
+```bash
+git push origin main
+```
+
+2. **Import to Vercel:**
+   - Go to [vercel.com](https://vercel.com)
+   - Import your GitHub repository
+   - Vercel auto-detects configuration
+
+3. **Set Environment Variables:**
+   - In Vercel dashboard → Settings → Environment Variables
+   - Add `OPENAI_API_KEY` and `ELEVENLABS_API_KEY`
+
+4. **Deploy:**
+   - Automatic deployment on every push to main
+   - Live in ~30 seconds
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment guide.
 
 ## Usage
 
@@ -60,46 +84,21 @@ http://localhost:3001
 3. Once the story appears, click "Generate Voice" to create audio narration
 4. Use the Play/Stop buttons to control audio playback
 
-## Deployment to Netlify
-
-### Option 1: Netlify CLI
-
-1. Install Netlify CLI:
-```bash
-npm install -g netlify-cli
-```
-
-2. Build and deploy:
-```bash
-netlify deploy --prod
-```
-
-3. Set environment variables in Netlify dashboard:
-   - Go to Site settings > Environment variables
-   - Add `OPENAI_API_KEY`
-   - Add `ELEVENLABS_API_KEY`
-
-### Option 2: Netlify Dashboard
-
-1. Connect your GitHub repository to Netlify
-2. Configure build settings:
-   - Build command: `npm install`
-   - Publish directory: `public`
-   - Functions directory: (leave empty for now)
-3. Add environment variables in Site settings
-
-**Note:** This application requires a backend server. For Netlify deployment, you'll need to convert the API endpoints to Netlify Functions or use a separate backend service.
-
 ## Project Structure
 
 ```
 story-generator/
-├── public/
-│   ├── index.html      # Main HTML file
-│   ├── styles.css      # Styling
-│   └── app.js          # Frontend JavaScript
-├── server.js           # Express server with API endpoints
-├── package.json        # Dependencies
+├── api/                # Serverless functions (Vercel)
+│   ├── generate-story.js
+│   ├── generate-audio.js
+│   └── health.js
+├── public/             # Static assets
+│   ├── index.html
+│   ├── styles.css
+│   └── app.js
+├── server.js           # Local development server
+├── package.json        # Dependencies (ESM modules)
+├── vercel.json         # Vercel configuration
 ├── .env               # Environment variables (not in git)
 └── README.md          # This file
 ```
@@ -113,8 +112,9 @@ story-generator/
 ## Technologies Used
 
 - **Frontend:** HTML5, CSS3, Vanilla JavaScript
-- **Backend:** Node.js, Express
+- **Backend:** Node.js (Express for local, Serverless for production)
 - **AI Services:** OpenAI GPT-3.5, ElevenLabs TTS
+- **Deployment:** Vercel Serverless Functions
 - **Styling:** Custom CSS with gradients
 
 ## Error Handling
