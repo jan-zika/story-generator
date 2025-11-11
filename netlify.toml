@@ -1,0 +1,79 @@
+# Netlify Configuration File
+# https://docs.netlify.com/configure-builds/file-based-configuration/
+
+[build]
+  # Directory with static files to publish
+  publish = "public"
+  
+  # Build command (not needed for static site)
+  command = "echo 'No build step required for static site'"
+  
+  # Functions directory
+  functions = "netlify/functions"
+
+[build.environment]
+  # Node.js version - Netlify supports 18.x and 20.x
+  NODE_VERSION = "20"
+
+[functions]
+  # Directory where Netlify functions are located
+  directory = "netlify/functions"
+  
+  # Node.js version for functions
+  node_bundler = "esbuild"
+  
+  # Include node_modules in function bundles
+  included_files = ["node_modules/**"]
+
+# Redirect rules for API endpoints
+# Netlify automatically serves functions at /.netlify/functions/[function-name]
+# These redirects make them available at /api/[function-name] for compatibility
+[[redirects]]
+  from = "/api/generate-story"
+  to = "/.netlify/functions/generate-story"
+  status = 200
+
+[[redirects]]
+  from = "/api/generate-audio"
+  to = "/.netlify/functions/generate-audio"
+  status = 200
+
+[[redirects]]
+  from = "/api/health"
+  to = "/.netlify/functions/health"
+  status = 200
+
+# SPA fallback - serve index.html for all other routes
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
+
+# Headers for all pages
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Headers for API endpoints (CORS)
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Headers = "Content-Type"
+    Access-Control-Allow-Methods = "GET, POST, OPTIONS"
+
+# Cache static assets
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
